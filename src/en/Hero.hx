@@ -195,6 +195,10 @@ class Hero extends Entity {
 			return 0;
 		else if( ca.lxValue()!=0 )
 			return ca.lxValue();
+		else if( ca.dpadLeftDown() )
+			return -1;
+		else if( ca.dpadRightDown() )
+			return 1;
 		else if( game.mouseDown )
 			return M.fclamp(game.mouseX/game.w(), 0, 1) < 0.5 ? -1 : 1;
 			// return ( M.fclamp(game.mouseX/game.w(), 0, 1) - 0.5 ) * 2;
