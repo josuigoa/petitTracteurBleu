@@ -340,7 +340,8 @@ class Game extends Process {
 				level.rawNightRatio+=0.01*tmod;
 			#end
 
-			if( ca.isKeyboardPressed(K.R) && ca.isKeyboardDown(K.SHIFT) )
+			if( ca.isKeyboardPressed(K.R) && ca.isKeyboardDown(K.SHIFT) 
+				|| ca.selectPressed() && ca.startPressed())
 				startLevel(0);
 		}
 
