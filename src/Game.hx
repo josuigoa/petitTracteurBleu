@@ -315,9 +315,11 @@ class Game extends Process {
 		if( !ui.Console.ME.isActive() && !ui.Modal.hasAny() ) {
 			#if hl
 			// Exit
-			if( ca.isKeyboardPressed(K.ESCAPE) )
+			final isEscPressed = ca.isKeyboardPressed(K.ESCAPE);
+			final isStartPressed = ca.startPressed();
+			if( isEscPressed || isStartPressed )
 				if( !cd.hasSetS("exitWarn",3) )
-					trace(Lang.t._("Irteteko, sakatu berriz ESC."));
+					trace(Lang.t._('Irteteko, sakatu berriz ${isEscPressed ? 'ESC' : 'START'}.'));
 				else
 					hxd.System.exit();
 			#end

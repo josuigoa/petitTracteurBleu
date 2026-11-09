@@ -13,6 +13,7 @@ class Hero extends Entity {
 	public function new(e:World.Entity_Hero) {
 		super(e.cx, e.cy);
 		ca = Main.ME.controller.createAccess("hero");
+		ca.setLeftDeadZone(0.01);
 
 		spr.set("tractorBase");
 		addToLayer(Const.DP_HERO);
