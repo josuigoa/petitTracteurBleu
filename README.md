@@ -9,6 +9,8 @@ Mezu hori aldatu nahi izanez gero, bistartatu nahi den testua instalazio karpeta
 
 ![](./gaur_pizza.png)
 
+Euskarazko bertsioa [hemendik](https://github.com/josuigoa/petitTracteurBleu/releases/tag/1.0.0) deskargatu dezakezu.
+
 # About
 
 You are Little Blue Tractor and your goal is to find all the cows and bring them back home before night falls (the game lasts about 3 mins).
