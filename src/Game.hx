@@ -1,5 +1,6 @@
 import dn.Process;
 import hxd.Key;
+using StringTools;
 
 class Game extends Process {
 	public static var ME : Game;
@@ -40,6 +41,8 @@ class Game extends Process {
 	public var mouseDown = false;
 	var mouseDownTime = -1.;
 
+	static inline var DEFAULT_MEZUA_TEXT = 'Zorionak!';
+	var mezuaText:String;
 
 	public function new() {
 		super(Main.ME);
@@ -65,6 +68,10 @@ class Game extends Process {
 		Boot.ME.s2d.addEventListener( onEvents );
 
 		startLevel(0);
+
+		mezuaText = try sys.io.File.getContent('mezua.txt').trim().replace('<br>', '\n') catch(_) DEFAULT_MEZUA_TEXT;
+		if (mezuaText == null || mezuaText == '')
+			mezuaText = DEFAULT_MEZUA_TEXT;
 	}
 
 
@@ -98,6 +105,7 @@ class Game extends Process {
 		texts.push(wrapper);
 		root.add(wrapper, Const.DP_UI);
 		var tf = new h2d.Text(Assets.fontLarge, wrapper);
+		tf.textAlign = h2d.Text.Align.MultilineCenter;
 		tf.text = str;
 		tf.scale(Const.SCALE);
 		tf.textColor = c;
@@ -309,7 +317,7 @@ class Game extends Process {
 			// Exit
 			if( ca.isKeyboardPressed(K.ESCAPE) )
 				if( !cd.hasSetS("exitWarn",3) )
-					trace(Lang.t._("Press ESCAPE again to exit."));
+					trace(Lang.t._("Irteteko, sakatu berriz ESC."));
 				else
 					hxd.System.exit();
 			#end
@@ -350,7 +358,7 @@ class Game extends Process {
 			levelComplete = true;
 			sleepMask.visible = true;
 			hero.winX = hero.footX;
-			bigText("Bravo !", 0xffcc00);
+			bigText(mezuaText, 0xffcc00);
 		}
 
 		if( levelComplete ) {

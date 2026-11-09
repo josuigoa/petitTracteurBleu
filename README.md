@@ -1,3 +1,14 @@
+# BUKAERAKO MEZUA ALDATU
+
+Bildu beharreko elementu guztiak (behi, egur eta sagarrak) baserrira eramatean, zoriontzeko mezu bat agertzen da. Defektuz "Zorionak!" jarriko du.
+
+Mezu hori aldatu nahi izanez gero, bistartatu nahi den testua instalazio karpetan dagoen "mezua.txt" idatzi beharko da. Lerro saltoa jartzeko '&lt;br&gt;' testua jarri beharko da. Adibidez:
+
+- Zorionak&lt;br&gt;Josu!
+- Gaur afaltzeko&lt;br&gt;PIZZA!
+
+![](./gaur_pizza.png)
+
 # About
 
 You are Little Blue Tractor and your goal is to find all the cows and bring them back home before night falls (the game lasts about 3 mins).
