@@ -2,10 +2,10 @@
 
 Bildu beharreko elementu guztiak (behi, egur eta sagarrak) baserrira eramatean, zoriontzeko mezu bat agertzen da. Defektuz "Zorionak!" jarriko du.
 
-Mezu hori aldatu nahi izanez gero, bistartatu nahi den testua instalazio karpetan dagoen "mezua.txt" idatzi beharko da. Lerro saltoa jartzeko '&lt;br&gt;' testua jarri beharko da. Adibidez:
+Mezu hori aldatu nahi izanez gero, bistaratu nahi den testua `--mezua` parametroarekin pasatu beharko zaio jokoari exekutatzeko momentuan. Lerro saltoa jartzeko '&lt;br&gt;' testua jarri beharko da. Adibidez:
 
-- Zorionak&lt;br&gt;Josu!
-- Gaur afaltzeko&lt;br&gt;PIZZA!
+- PetitTracteurBlew.exe --mezua="Lortu duzu!"
+- PetitTracteurBlew.exe --mezua="Gaur afaltzeko&lt;br&gt;PIZZA!"
 
 ![](./gaur_pizza.png)
 

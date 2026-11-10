@@ -1,48 +1,54 @@
 import dn.Process;
 import hxd.Key;
+
 using StringTools;
 
 class Game extends Process {
-	public static var ME : Game;
+	public static var ME:Game;
 
 	/** Game controller (pad or keyboard) **/
-	public var ca : dn.heaps.Controller.ControllerAccess;
+	public var ca:dn.heaps.Controller.ControllerAccess;
 
 	/** Particles **/
-	public var fx : Fx;
+	public var fx:Fx;
 
 	/** Basic viewport control **/
-	public var camera : Camera;
+	public var camera:Camera;
 
 	/** Container of all visual game objects. Ths wrapper is moved around by Camera. **/
-	public var scroller : h2d.Layers;
+	public var scroller:h2d.Layers;
 
 	/** Level data **/
-	public var level : Level;
+	public var level:Level;
 
 	/** UI **/
-	public var hud : ui.Hud;
+	public var hud:ui.Hud;
 
 	/** Slow mo internal values**/
 	var curGameSpeed = 1.0;
-	var slowMos : Map<String, { id:String, t:Float, f:Float }> = new Map();
+
+	var slowMos:Map<String, {id:String, t:Float, f:Float}> = new Map();
 
 	/** LEd world data **/
-	public var world : World;
+	public var world:World;
 
-	public var hero : en.Hero;
-	public var cart : en.Cart;
-	public var teint : h2d.filter.ColorMatrix;
-	var logo : HSprite;
-	var sleepMask : HSprite;
+	public var hero:en.Hero;
+	public var cart:en.Cart;
+	public var teint:h2d.filter.ColorMatrix;
+
+	var logo:HSprite;
+	var sleepMask:HSprite;
+
 	public var levelComplete = false;
 
 	public var mouseX = -1.;
 	public var mouseDown = false;
+
 	var mouseDownTime = -1.;
 
 	static inline var DEFAULT_MEZUA_TEXT = 'Zorionak!';
-	var mezuaText:String;
+
+	var mezuaText:String = DEFAULT_MEZUA_TEXT;
 
 	public function new() {
 		super(Main.ME);
@@ -65,29 +71,41 @@ class Game extends Process {
 		root.add(sleepMask, Const.DP_TOP);
 		sleepMask.colorize(C.hexToInt("#16162b"), 1);
 
-		Boot.ME.s2d.addEventListener( onEvents );
+		Boot.ME.s2d.addEventListener(onEvents);
 
 		startLevel(0);
 
-		mezuaText = try sys.io.File.getContent('mezua.txt').trim().replace('<br>', '\n') catch(_) DEFAULT_MEZUA_TEXT;
-		if (mezuaText == null || mezuaText == '')
-			mezuaText = DEFAULT_MEZUA_TEXT;
-	}
+		if (Sys.args().length > 0) {
+			final argArray = Sys.args()[0].split('=');
+			if (argArray.length > 1) {
+				final argName = argArray[0];
+				final argValue = argArray[1];
 
+				if (argName == '--mezua') {
+					mezuaText = argValue.trim().replace('<br>', '\n');
+				}
+			}
+		}
+	}
 
 	function onEvents(ev:hxd.Event) {
 		switch ev.kind {
-			case EPush: onMouseDown(ev);
-			case ERelease: onMouseUp();
+			case EPush:
+				onMouseDown(ev);
+			case ERelease:
+				onMouseUp();
 			case EMove:
 			case EOver:
-			case EOut: onMouseUp();
+			case EOut:
+				onMouseUp();
 			case EWheel:
 			case EFocus:
-			case EFocusLost: onMouseUp();
+			case EFocusLost:
+				onMouseUp();
 			case EKeyDown:
 			case EKeyUp:
-			case EReleaseOutside: onMouseUp();
+			case EReleaseOutside:
+				onMouseUp();
 			case ETextInput:
 			case ECheck:
 		}
@@ -99,7 +117,8 @@ class Game extends Process {
 		mouseX = e.relX;
 	}
 
-	var texts : Array<h2d.Object> = [];
+	var texts:Array<h2d.Object> = [];
+
 	public function bigText(str:String, c:UInt) {
 		var wrapper = new h2d.Object();
 		texts.push(wrapper);
@@ -109,21 +128,21 @@ class Game extends Process {
 		tf.text = str;
 		tf.scale(Const.SCALE);
 		tf.textColor = c;
-		wrapper.x = Std.int( w()*0.5 - tf.textWidth*tf.scaleX*0.5 );
+		wrapper.x = Std.int(w() * 0.5 - tf.textWidth * tf.scaleX * 0.5);
 		wrapper.y = 0;
 
-		tw.createS(tf.y, -tf.textHeight*tf.scaleY>50, 1);
+		tw.createS(tf.y, -tf.textHeight * tf.scaleY > 50, 1);
 	}
 
 	function clearBigTexts() {
-		for(t in texts)
+		for (t in texts)
 			t.remove();
 		texts = [];
 	}
 
 	function onMouseUp() {
-		if( mouseDown && haxe.Timer.stamp()-mouseDownTime<=0.3 )
-			hero.onShortPress( mouseX>=w()*0.5 ? 1 : -1 );
+		if (mouseDown && haxe.Timer.stamp() - mouseDownTime <= 0.3)
+			hero.onShortPress(mouseX >= w() * 0.5 ? 1 : -1);
 
 		mouseDown = false;
 	}
@@ -132,52 +151,51 @@ class Game extends Process {
 		mouseX = e.relX;
 	}
 
-
 	function startLevel(idx:Int) {
 		// Cleanup
-		if( level!=null )
+		if (level != null)
 			level.destroy();
 		levelComplete = false;
 		clearBigTexts();
 
-		for(e in Entity.ALL)
+		for (e in Entity.ALL)
 			e.destroy();
 		gc();
 
-		if( logo!=null )
+		if (logo != null)
 			logo.remove();
 
 		tw.completeAll();
 
 		// Init
-		level = new Level( idx, world.levels[idx] );
+		level = new Level(idx, world.levels[idx]);
 		camera.zoom = 1;
 
 		sleepMask.alpha = 0;
 		sleepMask.visible = false;
 
 		// Create entities
-		hero = new en.Hero( level.data.l_Entities.all_Hero[0] );
-		camera.trackTarget( hero, true, 0, -Const.GRID*2 );
+		hero = new en.Hero(level.data.l_Entities.all_Hero[0]);
+		camera.trackTarget(hero, true, 0, -Const.GRID * 2);
 		cart = new en.Cart();
 
-		for(e in level.data.l_Entities.all_Item)
+		for (e in level.data.l_Entities.all_Item)
 			new en.Item(e.f_type, e.cx, e.cy);
 
-		for(e in level.data.l_Entities.all_Home)
+		for (e in level.data.l_Entities.all_Home)
 			new en.Home(e);
 
-		for(e in level.data.l_Entities.all_ItemGenerator)
+		for (e in level.data.l_Entities.all_ItemGenerator)
 			new en.ItemGen(e);
 
-		for(e in level.data.l_Entities.all_Bumper)
+		for (e in level.data.l_Entities.all_Bumper)
 			new en.Bumper(e);
 
 		fx.clear();
 		hud.invalidate();
 
 		// Logo
-		logo = Assets.tiles.h_get("logo",0, 0.5,0.5);
+		logo = Assets.tiles.h_get("logo", 0, 0.5, 0.5);
 		root.add(logo, Const.DP_UI);
 		tw.createMs(logo.alpha, 0, 10000);
 		cd.setS("logoArrival", 1.5);
@@ -193,6 +211,7 @@ class Game extends Process {
 		Called when the CastleDB changes on the disk, if hot-reloading is enabled in Boot.hx
 	**/
 	public function onCdbReload() {}
+
 	public function onLedReload(json:String) {
 		world.parseJson(json);
 		restartLevel();
@@ -201,21 +220,20 @@ class Game extends Process {
 	override function onResize() {
 		super.onResize();
 		scroller.setScale(Const.SCALE);
-		if( logo!=null )
+		if (logo != null)
 			logo.setScale(Const.SCALE);
 
-		if( sleepMask!=null ) {
-			sleepMask.scaleX = w()/sleepMask.tile.width;
-			sleepMask.scaleY = h()/sleepMask.tile.height;
+		if (sleepMask != null) {
+			sleepMask.scaleX = w() / sleepMask.tile.width;
+			sleepMask.scaleY = h() / sleepMask.tile.height;
 		}
 	}
 
-
 	function gc() {
-		if( Entity.GC==null || Entity.GC.length==0 )
+		if (Entity.GC == null || Entity.GC.length == 0)
 			return;
 
-		for(e in Entity.GC)
+		for (e in Entity.GC)
 			e.dispose();
 		Entity.GC = [];
 	}
@@ -223,14 +241,13 @@ class Game extends Process {
 	override function onDispose() {
 		super.onDispose();
 
-		Boot.ME.s2d.removeEventListener( onEvents );
+		Boot.ME.s2d.removeEventListener(onEvents);
 
 		fx.destroy();
-		for(e in Entity.ALL)
+		for (e in Entity.ALL)
 			e.destroy();
 		gc();
 	}
-
 
 	/**
 		Start a cumulative slow-motion effect that will affect `tmod` value in this Process
@@ -239,35 +256,32 @@ class Game extends Process {
 		@param sec Realtime second duration of this slowmo
 		@param speedFactor Cumulative multiplier to the Process `tmod`
 	**/
-	public function addSlowMo(id:String, sec:Float, speedFactor=0.3) {
-		if( slowMos.exists(id) ) {
+	public function addSlowMo(id:String, sec:Float, speedFactor = 0.3) {
+		if (slowMos.exists(id)) {
 			var s = slowMos.get(id);
 			s.f = speedFactor;
 			s.t = M.fmax(s.t, sec);
-		}
-		else
-			slowMos.set(id, { id:id, t:sec, f:speedFactor });
+		} else
+			slowMos.set(id, {id: id, t: sec, f: speedFactor});
 	}
-
 
 	function updateSlowMos() {
 		// Timeout active slow-mos
-		for(s in slowMos) {
-			s.t -= utmod * 1/Const.FPS;
-			if( s.t<=0 )
+		for (s in slowMos) {
+			s.t -= utmod * 1 / Const.FPS;
+			if (s.t <= 0)
 				slowMos.remove(s.id);
 		}
 
 		// Update game speed
 		var targetGameSpeed = 1.0;
-		for(s in slowMos)
-			targetGameSpeed*=s.f;
-		curGameSpeed += (targetGameSpeed-curGameSpeed) * (targetGameSpeed>curGameSpeed ? 0.2 : 0.6);
+		for (s in slowMos)
+			targetGameSpeed *= s.f;
+		curGameSpeed += (targetGameSpeed - curGameSpeed) * (targetGameSpeed > curGameSpeed ? 0.2 : 0.6);
 
-		if( M.fabs(curGameSpeed-targetGameSpeed)<=0.001 )
+		if (M.fabs(curGameSpeed - targetGameSpeed) <= 0.001)
 			curGameSpeed = targetGameSpeed;
 	}
-
 
 	/**
 		Pause briefly the game for 1 frame: very useful for impactful moments,
@@ -280,45 +294,54 @@ class Game extends Process {
 	override function preUpdate() {
 		super.preUpdate();
 
-		for(e in Entity.ALL) if( !e.destroyed ) e.preUpdate();
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.preUpdate();
 	}
 
 	override function postUpdate() {
 		super.postUpdate();
 
-
-		for(e in Entity.ALL) if( !e.destroyed ) e.postUpdate();
-		for(e in Entity.ALL) if( !e.destroyed ) e.finalUpdate();
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.postUpdate();
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.finalUpdate();
 		gc();
 
 		// Update slow-motions
 		updateSlowMos();
-		baseTimeMul = ( 0.2 + 0.8*curGameSpeed ) * ( ucd.has("stopFrame") ? 0.3 : 1 );
+		baseTimeMul = (0.2 + 0.8 * curGameSpeed) * (ucd.has("stopFrame") ? 0.3 : 1);
 		Assets.tiles.tmod = tmod;
 
 		// Logo
-		logo.x = Std.int( w()*0.5 );
-		logo.y = Std.int( h()*0.88 ) + cd.getRatio("logoArrival")*h()*0.2;
+		logo.x = Std.int(w() * 0.5);
+		logo.y = Std.int(h() * 0.88) + cd.getRatio("logoArrival") * h() * 0.2;
 	}
 
 	override function fixedUpdate() {
 		super.fixedUpdate();
 
-		for(e in Entity.ALL) if( !e.destroyed ) e.fixedUpdate();
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.fixedUpdate();
 	}
 
 	override function update() {
 		super.update();
 
-		for(e in Entity.ALL) if( !e.destroyed ) e.update();
+		for (e in Entity.ALL)
+			if (!e.destroyed)
+				e.update();
 
-		if( !ui.Console.ME.isActive() && !ui.Modal.hasAny() ) {
+		if (!ui.Console.ME.isActive() && !ui.Modal.hasAny()) {
 			#if hl
 			// Exit
 			final isEscPressed = ca.isKeyboardPressed(K.ESCAPE);
 			final isStartPressed = ca.startPressed();
-			if( isEscPressed || isStartPressed )
-				if( !cd.hasSetS("exitWarn",3) )
+			if (isEscPressed || isStartPressed)
+				if (!cd.hasSetS("exitWarn", 3))
 					trace(Lang.t._('Irteteko, sakatu berriz ${isEscPressed ? 'ESC' : 'START'}.'));
 				else
 					hxd.System.exit();
@@ -326,49 +349,47 @@ class Game extends Process {
 
 			#if debug
 			// Level marks
-			if( ca.isKeyboardPressed(K.M) ) {
+			if (ca.isKeyboardPressed(K.M)) {
 				var allMarks = LevelMark.getConstructors();
-				for( cx in 0...level.wid )
-				for( cy in 0...level.hei ) {
-					var i = 0;
-					for( id in allMarks ) {
-						var m = LevelMark.createByName(id);
-						if( level.hasMark(m, cx,cy) )
-							fx.markerText(cx,cy, id.substr(0,2), C.makeColorHsl(i/allMarks.length), 10 );
-						i++;
+				for (cx in 0...level.wid)
+					for (cy in 0...level.hei) {
+						var i = 0;
+						for (id in allMarks) {
+							var m = LevelMark.createByName(id);
+							if (level.hasMark(m, cx, cy))
+								fx.markerText(cx, cy, id.substr(0, 2), C.makeColorHsl(i / allMarks.length), 10);
+							i++;
+						}
 					}
-				}
 			}
 
 			// Kill al items
-			if( ca.isKeyboardDown(K.K) )
-				for(e in en.Item.ALL)
+			if (ca.isKeyboardDown(K.K))
+				for (e in en.Item.ALL)
 					e.destroy();
 
 			// Force night
-			if( ca.isKeyboardDown(K.N) )
-				level.rawNightRatio+=0.01*tmod;
+			if (ca.isKeyboardDown(K.N))
+				level.rawNightRatio += 0.01 * tmod;
 			#end
 
-			if( ca.isKeyboardPressed(K.R) && ca.isKeyboardDown(K.SHIFT) 
-				|| ca.selectPressed() && ca.startPressed())
+			if (ca.isKeyboardPressed(K.R) && ca.isKeyboardDown(K.SHIFT) || ca.selectPressed() && ca.startPressed())
 				startLevel(0);
 		}
 
 		// Victory!
-		if( !levelComplete && !en.Item.hasAnyLeft() ) {
+		if (!levelComplete && !en.Item.hasAnyLeft()) {
 			levelComplete = true;
 			sleepMask.visible = true;
 			hero.winX = hero.footX;
 			bigText(mezuaText, 0xffcc00);
 		}
 
-		if( levelComplete ) {
-			sleepMask.alpha += (0.8-sleepMask.alpha) * M.fmin(1, 0.06*tmod);
-			camera.zoom += (1.5-camera.zoom) * M.fmin(1, 0.01*tmod);
+		if (levelComplete) {
+			sleepMask.alpha += (0.8 - sleepMask.alpha) * M.fmin(1, 0.06 * tmod);
+			camera.zoom += (1.5 - camera.zoom) * M.fmin(1, 0.01 * tmod);
 		}
 
-		level.rawNightRatio+=0.0004*tmod;
+		level.rawNightRatio += 0.0004 * tmod;
 	}
 }
-
