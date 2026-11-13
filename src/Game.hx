@@ -82,7 +82,7 @@ class Game extends Process {
 				final argValue = argArray[1];
 
 				if (argName == '--mezua') {
-					mezuaText = argValue.trim().replace('<br>', '\n');
+					mezuaText = argValue.trim().replace('::', '\n');
 				}
 			}
 		}

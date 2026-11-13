@@ -2,14 +2,18 @@
 
 Bildu beharreko elementu guztiak (behi, egur eta sagarrak) baserrira eramatean, zoriontzeko mezu bat agertzen da. Defektuz "Zorionak!" jarriko du.
 
-Mezu hori aldatu nahi izanez gero, bistaratu nahi den testua `--mezua` parametroarekin pasatu beharko zaio jokoari exekutatzeko momentuan. Lerro saltoa jartzeko '&lt;br&gt;' testua jarri beharko da. Adibidez:
+Mezu hori aldatu nahi izanez gero, bistaratu nahi den testua `--mezua` parametroarekin pasatu beharko zaio jokoari exekutatzeko momentuan. Lerro saltoa jartzeko '::' testua jarri beharko da. Adibidez:
 
 - PetitTracteurBlew.exe --mezua="Lortu duzu!"
-- PetitTracteurBlew.exe --mezua="Gaur afaltzeko&lt;br&gt;PIZZA!"
+- PetitTracteurBlew.exe --mezua="Gaur afaltzeko::PIZZA!"
 
 ![](./gaur_pizza.png)
 
 Euskarazko bertsioa [hemendik](https://github.com/josuigoa/petitTracteurBleu/releases/tag/1.0.0) deskargatu dezakezu.
+
+## PANTAILA ALDATZEN / SORTZEN
+
+Jokoko pantaila bakarra [LDtk](https://ldtk.io/) programarekin egina da. Pantailaren datuak `res/world/petitTracteurBleu.ldtk` fitxategian daude ta LDtk-ren 1.5.3 bertsioarekin ongi zabaltzen da.
 
 # About
 
