@@ -26,7 +26,7 @@ class ItemGen extends Entity {
 		var i = new Item(data.f_type, cx,cy);
 
 		// Pick spawn point
-		var dh = new dn.DecisionHelper( dn.Bresenham.getDisc(cx,cy,data.f_radius) );
+		var dh = new dn.DecisionHelper( dn.geom.Bresenham.getDisc(cx,cy,data.f_radius) );
 		switch data.f_spawnMode {
 			case FloatInAir:
 				dh.keepOnly( (pt)->!level.hasCollision(pt.x,pt.y) );

@@ -305,7 +305,7 @@ class Entity {
 	}
 
 	public inline function sightCheckCase(x,y) {
-		return dn.Bresenham.checkThinLine(cx,cy, x,y, canSeeThrough);
+		return dn.geom.Bresenham.checkThinLine(cx,cy, x,y, canSeeThrough);
 	}
 
 	public inline function sightCheck(e:Entity) {

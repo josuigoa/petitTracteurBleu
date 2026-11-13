@@ -1,4 +1,4 @@
-# @install: lix --silent download "gh://github.com/deepnight/heaps#7ca36f1fc52aaacdc54f6c64f68b04dfeee184a4" into heaps/1.9.1/github/7ca36f1fc52aaacdc54f6c64f68b04dfeee184a4
+# @install: lix --silent download "gh://github.com/deepnight/heaps#e5a3d382ac8965cd8ffc7ae3bbca0ac3ec1a563c" into heaps/2.1.0/github/e5a3d382ac8965cd8ffc7ae3bbca0ac3ec1a563c
 -lib format
--cp ${HAXE_LIBCACHE}/heaps/1.9.1/github/7ca36f1fc52aaacdc54f6c64f68b04dfeee184a4/
--D heaps=1.9.1
+-cp ${HAXE_LIBCACHE}/heaps/2.1.0/github/e5a3d382ac8965cd8ffc7ae3bbca0ac3ec1a563c/
+-D heaps=2.1.0

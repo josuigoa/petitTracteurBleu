@@ -94,7 +94,7 @@ class Cart extends Entity {
 
 		// Relocate out of collisions
 		if( level.hasCollision(cx,cy) ) {
-			var dh = new dn.DecisionHelper( dn.Bresenham.getDisc(cx,cy,2) );
+			var dh = new dn.DecisionHelper( dn.geom.Bresenham.getDisc(cx,cy,2) );
 			dh.keepOnly( pt->!level.hasCollision(pt.x,pt.y) );
 			dh.keepOnly( pt->hero.sightCheckCase(pt.x, pt.y) );
 			dh.score( pt->level.hasCollision(pt.x,pt.y+1) ? 0.5 : 0 );

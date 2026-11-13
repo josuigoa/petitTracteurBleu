@@ -3,5 +3,7 @@
 -lib heaps
 -lib deepnightLibs
 -lib ldtk-haxe-api
+-D useProcessTweenie
+
 -main Boot
 -dce full
