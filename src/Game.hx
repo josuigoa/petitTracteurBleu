@@ -7,7 +7,7 @@ class Game extends Process {
 	public static var ME:Game;
 
 	/** Game controller (pad or keyboard) **/
-	public var ca:dn.heaps.Controller.ControllerAccess;
+	public var ca:dn.legacy.Controller.ControllerAccess;
 
 	/** Particles **/
 	public var fx:Fx;
@@ -69,7 +69,7 @@ class Game extends Process {
 
 		sleepMask = Assets.tiles.h_get("sleepMask");
 		root.add(sleepMask, Const.DP_TOP);
-		sleepMask.colorize(C.hexToInt("#16162b"), 1);
+		sleepMask.colorize(new Col("#16162b"), 1);
 
 		Boot.ME.s2d.addEventListener(onEvents);
 
@@ -357,7 +357,7 @@ class Game extends Process {
 						for (id in allMarks) {
 							var m = LevelMark.createByName(id);
 							if (level.hasMark(m, cx, cy))
-								fx.markerText(cx, cy, id.substr(0, 2), C.makeColorHsl(i / allMarks.length), 10);
+								fx.markerText(cx, cy, id.substr(0, 2), Col.fromHsl(i / allMarks.length, 1, 1), 10);
 							i++;
 						}
 					}

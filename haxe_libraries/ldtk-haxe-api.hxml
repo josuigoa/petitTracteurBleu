@@ -1,4 +1,4 @@
-# @install: lix --silent download "haxelib:/ldtk-haxe-api#0.7.2-rc.1" into ldtk-haxe-api/0.7.2-rc.1/haxelib
+# @install: lix --silent download "gh://github.com/deepnight/ldtk-haxe-api#39b2371ff65e04965268a89664ba731f22c62dac" into ldtk-haxe-api/1.2.0-rc.1/github/39b2371ff65e04965268a89664ba731f22c62dac
 -lib deepnightLibs
--cp ${HAXE_LIBCACHE}/ldtk-haxe-api/0.7.2-rc.1/haxelib/src/
--D ldtk-haxe-api=0.7.2-rc.1
+-cp ${HAXE_LIBCACHE}/ldtk-haxe-api/1.2.0-rc.1/github/39b2371ff65e04965268a89664ba731f22c62dac/src/
+-D ldtk-haxe-api=1.2.0-rc.1

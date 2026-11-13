@@ -1,4 +1,4 @@
-# @install: lix --silent download "haxelib:/heaps#1.9.1" into heaps/1.9.1/haxelib
+# @install: lix --silent download "gh://github.com/deepnight/heaps#7ca36f1fc52aaacdc54f6c64f68b04dfeee184a4" into heaps/1.9.1/github/7ca36f1fc52aaacdc54f6c64f68b04dfeee184a4
 -lib format
--cp ${HAXE_LIBCACHE}/heaps/1.9.1/haxelib/
+-cp ${HAXE_LIBCACHE}/heaps/1.9.1/github/7ca36f1fc52aaacdc54f6c64f68b04dfeee184a4/
 -D heaps=1.9.1

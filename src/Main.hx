@@ -3,8 +3,8 @@ import hxd.Key;
 
 class Main extends dn.Process {
 	public static var ME : Main;
-	public var controller : dn.heaps.Controller;
-	public var ca : dn.heaps.Controller.ControllerAccess;
+	public var controller : dn.legacy.Controller;
+	public var ca : dn.legacy.Controller.ControllerAccess;
 
 	public function new(s:h2d.Scene) {
 		super();
@@ -39,11 +39,11 @@ class Main extends dn.Process {
 				}, 0.2);
 			});
 
-			hxd.Res.world.world_ldtk.watch(function() {
+			hxd.Res.world.petitTracteurBleu_ldtk.watch(function() {
 				delayer.cancelById("led");
 				delayer.addS("led", function() {
 					if( Game.ME!=null )
-						Game.ME.onLedReload( hxd.Res.world.world_ldtk.entry.getBytes().toString() );
+						Game.ME.onLedReload( hxd.Res.world.petitTracteurBleu_ldtk.entry.getBytes().toString() );
 				}, 0.2);
 			});
 		#end
@@ -55,7 +55,7 @@ class Main extends dn.Process {
 		Data.load( hxd.Res.data.entry.getText() );
 
 		// Game controller
-		controller = new dn.heaps.Controller(s);
+		controller = new dn.legacy.Controller(s);
 		ca = controller.createAccess("main");
 		controller.bind(AXIS_LEFT_X_NEG, Key.LEFT, Key.Q, Key.A);
 		controller.bind(AXIS_LEFT_X_POS, Key.RIGHT, Key.D);
