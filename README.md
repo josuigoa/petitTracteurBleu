@@ -11,11 +11,13 @@ Mezu hori aldatu nahi izanez gero, bistaratu nahi den testua `--mezua` parametro
 
 Euskarazko bertsioa [hemendik](https://github.com/josuigoa/petitTracteurBleu/releases/tag/1.0.0) deskargatu dezakezu.
 
-## PANTAILA ALDATZEN / SORTZEN
+# PANTAILA ALDATZEN / SORTZEN
 
-Jokoko pantaila bakarra [LDtk](https://ldtk.io/) programarekin egina da. Pantailaren datuak `res/world/petitTracteurBleu.ldtk` fitxategian daude ta LDtk-ren 1.5.3 bertsioarekin ongi zabaltzen da.
+Jokoko pantaila bakarra [LDtk](https://ldtk.io/) programarekin egina da. Pantailaren datuak `res/world/petitTracteurBleu.ldtk` fitxategian daude ta LDtk-ren 1.5.3 bertsioarekin ongi irekitzen da.
 
-# About
+
+# BEREZKO README.md
+## About
 
 You are Little Blue Tractor and your goal is to find all the cows and bring them back home before night falls (the game lasts about 3 mins).
 
@@ -23,7 +25,7 @@ You are Little Blue Tractor and your goal is to find all the cows and bring them
 
 It was designed to be played by someone who never played a video game before, and most movements are automated. The manual jump mechanic is only useful to explore hidden areas (using bumpers).
 
-# Compiling
+## Compiling
 
 Please refer to my `GameBase` project to build this one:
 
