@@ -85,7 +85,12 @@ class Game extends Process {
 					mezuaText = argValue.trim().replace('::', '\n');
 				}
 			}
+		} else if (sys.FileSystem.exists('mezua.txt')) {
+			mezuaText = try sys.io.File.getContent('mezua.txt').trim().replace('<br>', '\n') catch (_) DEFAULT_MEZUA_TEXT;
 		}
+
+		if (mezuaText == null || mezuaText.trim() == '')
+			mezuaText = DEFAULT_MEZUA_TEXT;
 	}
 
 	function onEvents(ev:hxd.Event) {

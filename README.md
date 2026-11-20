@@ -10,7 +10,12 @@ Jokoa berrabiarazteko, teklatuan `Shift+R` edo agintean `Select+Start` sakatu.
 
 Bildu beharreko elementu guztiak (behi, egur eta sagarrak) baserrira eramatean, zoriontzeko mezu bat agertzen da. Defektuz "Zorionak!" jarriko du.
 
-Mezu hori aldatu nahi izanez gero, bistaratu nahi den testua `--mezua` parametroarekin pasatu beharko zaio jokoari exekutatzeko momentuan. Lerro saltoa jartzeko '::' testua jarri beharko da. Adibidez:
+Mezu hori aldatu nahi izanez gero, bi bide daude:
+
+- Bistaratu nahi den testua instalazio karpetan dagoen `mezua.txt` fitxategian idatziz.
+- Bistaratu nahi den testua `--mezua` parametroarekin pasatuz exekutatzeko momentuan. (fitxategian idatzi bada ere, parametroak izanen du lehentasuna)
+
+Testuan lerro saltoa jartzeko '::' testua jarri beharko da. Adibidez:
 
 - PetitTracteurBleu.exe --mezua="Lortu duzu!"
 - PetitTracteurBleu.exe --mezua="Gaur afaltzeko::PIZZA!"
