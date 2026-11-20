@@ -1,6 +1,6 @@
 # EUSKARAZKO BERTSIOA
 
-Euskarazko bertsioa [hemendik](https://github.com/josuigoa/petitTracteurBleu/releases/tag/1.0.0) deskargatu dezakezu.
+Euskarazko bertsioa [hemendik](https://github.com/josuigoa/petitTracteurBleu/releases/tag/v1.0.0) deskargatu dezakezu.
 
 Jokotik ateratzeko, teklatuan `Esc` tekla edo aginteko `Start` sakatu behar dituzu, bi aldiz.
 
