@@ -1,0 +1,3 @@
+base.hxml
+-D no-deprecation-warnings
+-js bin/client.js

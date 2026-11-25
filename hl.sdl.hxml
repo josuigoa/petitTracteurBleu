@@ -1,3 +1,3 @@
 hl.hxml
--lib hlsdl
 -D no-deprecation-warnings
+-lib hlsdl

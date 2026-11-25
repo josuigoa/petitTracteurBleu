@@ -75,6 +75,7 @@ class Game extends Process {
 
 		startLevel(0);
 
+		#if sys
 		if (Sys.args().length > 0) {
 			final argArray = Sys.args()[0].split('=');
 			if (argArray.length > 1) {
@@ -82,15 +83,20 @@ class Game extends Process {
 				final argValue = argArray[1];
 
 				if (argName == '--mezua') {
-					mezuaText = argValue.trim().replace('::', '\n');
+					mezuaText = argValue;
 				}
 			}
 		} else if (sys.FileSystem.exists('mezua.txt')) {
 			mezuaText = try sys.io.File.getContent('mezua.txt').trim().replace('<br>', '\n') catch (_) DEFAULT_MEZUA_TEXT;
 		}
+		#elseif js
+		mezuaText = js.Browser.window.prompt("Ze testu nahi duzu bukaeran?", DEFAULT_MEZUA_TEXT);
+		#end
 
 		if (mezuaText == null || mezuaText.trim() == '')
 			mezuaText = DEFAULT_MEZUA_TEXT;
+
+		mezuaText = mezuaText.trim().replace('::', '\n');
 	}
 
 	function onEvents(ev:hxd.Event) {
