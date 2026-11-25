@@ -90,7 +90,7 @@ class Game extends Process {
 			mezuaText = try sys.io.File.getContent('mezua.txt').trim().replace('<br>', '\n') catch (_) DEFAULT_MEZUA_TEXT;
 		}
 		#elseif js
-		mezuaText = js.Browser.window.prompt("Ze testu nahi duzu bukaeran?", DEFAULT_MEZUA_TEXT);
+		mezuaText = js.Browser.window.prompt("Ze testu nahi duzu bukaeran? (lerro saltoa :: bidez, adb: Lortu::duzu!)", DEFAULT_MEZUA_TEXT);
 		#end
 
 		if (mezuaText == null || mezuaText.trim() == '')
